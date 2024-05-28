@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TagsModule } from './tag/tag.module';
 
 config();
 
@@ -15,9 +16,11 @@ config();
             username: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DB,
-            entities: [],
-            synchronize: true
-        })
+            // entities: ['src/**/*.entity.ts'],
+            synchronize: true,
+            autoLoadEntities: true
+        }),
+        TagsModule
     ],
     controllers: [AppController],
     providers: [AppService]

@@ -1,5 +1,5 @@
 import { Tag } from 'src/tag/tag.entity';
-import { Base } from 'src/utils/base';
+import { Base } from 'src/utils/base.entity';
 import { Column, ManyToMany } from 'typeorm';
 
 export class NoteEntity extends Base {
