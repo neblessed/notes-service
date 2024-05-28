@@ -21,4 +21,8 @@ export class TagsService {
     async remove(id: number) {
         await this.tagsRepository.delete(id);
     }
+
+    async create(tag: Tag) {
+        await this.tagsRepository.save(tag);
+    }
 }
