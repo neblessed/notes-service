@@ -12,12 +12,31 @@ export class TagsController {
     }
 
     @Post('/tag')
-    createNewTag(@Body() tag: Tag) {
+    async createNewTag(@Body() tag: Tag) {
+        const { id, title } = tag;
+        const tags = await this.tagsService.findAll();
+
+        if (tags.map((tag) => tag.title).includes(title)) {
+            return { message: 'This tag name already exists' };
+        }
+
+        if (tags.map((tag) => tag.id).includes(id)) {
+            return {
+                message: `Id: ${id} already exists. You may create tag without id then the id will create automatically`
+            };
+        }
         return this.tagsService.create(tag);
     }
 
     @Delete('/tag')
-    deleteTagById(@Query('id') id: number) {
+    async deleteTagById(@Query('id') id: number) {
+        const tags = await this.tagsService.findAll();
+
+        if (!tags.map((tag) => tag.id).includes(id)) {
+            return {
+                message: `Id: ${id} has not be found`
+            };
+        }
         return this.tagsService.remove(id);
     }
 }
