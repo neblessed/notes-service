@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    Post,
+    Put,
+    Query
+} from '@nestjs/common';
 import { Tag } from './tag.entity';
 import { TagsService } from './tag.service';
 
@@ -7,11 +16,13 @@ export class TagsController {
     constructor(private tagsService: TagsService) {}
 
     @Get('/allTags')
+    @HttpCode(200)
     getAllTags() {
         return this.tagsService.findAll();
     }
 
     @Post('/tag')
+    @HttpCode(201)
     async createNewTag(@Body() tag: Tag) {
         const { id, title } = tag;
         const tags = await this.tagsService.findAll();
@@ -29,6 +40,7 @@ export class TagsController {
     }
 
     @Delete('/tag')
+    @HttpCode(200)
     async deleteTagById(@Query('id') id: number) {
         const tags = await this.tagsService.findAll();
 
@@ -38,5 +50,20 @@ export class TagsController {
             };
         }
         return this.tagsService.remove(id);
+    }
+
+    @Put('/tag')
+    @HttpCode(200)
+    async updateTag(@Query('id') id: number, @Body() tag: Tag) {
+        const tags = await this.tagsService.findAll();
+
+        if (!tags.map((tag) => tag.id).includes(Number(id))) {
+            return {
+                message: `Id: ${id} has not be found`
+            };
+        }
+        this.tagsService.update(id, tag);
+
+        return { message: `Tag with id ${id} was updated` };
     }
 }

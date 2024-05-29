@@ -25,4 +25,11 @@ export class TagsService {
     async create(tag: Tag) {
         await this.tagsRepository.save(tag);
     }
+
+    async update(id: number, tag: Tag) {
+        await this.tagsRepository.update(id, {
+            title: tag.title,
+            description: tag.description
+        });
+    }
 }
