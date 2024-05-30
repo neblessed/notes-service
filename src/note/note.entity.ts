@@ -1,8 +1,9 @@
 import { Tag } from 'src/tag/tag.entity';
 import { Base } from 'src/utils/base.entity';
-import { Column, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToMany } from 'typeorm';
 
-export class NoteEntity extends Base {
+@Entity('notes')
+export class Note extends Base {
     @Column('note')
     note: string;
 

@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { NoteModule } from './note/note.module';
 import { TagsModule } from './tag/tag.module';
 
 config();
@@ -20,7 +21,8 @@ config();
             synchronize: true,
             autoLoadEntities: true
         }),
-        TagsModule
+        TagsModule,
+        NoteModule
     ],
     controllers: [AppController],
     providers: [AppService]
