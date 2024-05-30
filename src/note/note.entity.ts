@@ -1,12 +1,12 @@
 import { Tag } from 'src/tag/tag.entity';
 import { Base } from 'src/utils/base.entity';
-import { Column, Entity, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity('notes')
 export class Note extends Base {
-    @Column('note')
+    @Column({ name: 'note', type: 'varchar', length: 100 })
     note: string;
 
-    @ManyToMany('tag', (t: Tag) => t.id)
+    @ManyToOne(() => Tag, (tag: Tag) => tag.id)
     tag: Tag;
 }
